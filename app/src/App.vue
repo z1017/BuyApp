@@ -1,7 +1,10 @@
 <template>
   <div>
     <Header />
-    <Footer />
+    <!-- 路由组件出口的地方 -->
+    <router-view></router-view>
+    <!-- 在Home、Search -->
+    <Footer v-show="$route.meta.show"/>
   </div>
 </template>
 

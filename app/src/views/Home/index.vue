@@ -14,9 +14,9 @@
 
 <script>
 // 引入其余的组件
-import ListContainer from "./ListContainer/index.vue";
-import Recommend from "./Recommend/index.vue";
-import Rank from "./Rank/index.vue";
+import ListContainer from "./ListContainer";
+import Recommend from "./Recommend";
+import Rank from "./Rank";
 import Like from "./Like";
 import Floor from "./Floor";
 import Brand from "./Brand";
@@ -32,6 +32,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>

@@ -14,7 +14,6 @@ const mutations = {
     },
     GETBANNERLIST(state, bannerList) {
         state.bannerList = bannerList
-        console.log(state.bannerList);
     },
     GETFLOORLIST(state, floorList) {
         state.floorList = floorList

@@ -4,20 +4,15 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <div class="swiper-container" ref="mySwiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
+            <div
+              class="swiper-slide"
+              v-for="carousel in bannerList"
+              :key="carousel.id"
+            >
+              <img :src="carousel.imageUrl" />
             </div>
-           <!--  <div class="swiper-slide">
-              <img src="./images/banner2.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner3.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner4.jpg" />
-            </div> -->
           </div>
           <!-- 如果需要分页器 -->
           <div class="swiper-pagination"></div>
@@ -101,10 +96,50 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+// 引包
+import Swiper from "swiper";
+
 export default {
-  name: "ListContainer",
+  name: "listContainer",
+  mounted() {
+    // 派发action：通过Vuex发起Ajax请求，将数据存储在仓库中
+    this.$store.dispatch("getBannerList");
+  },
+  computed: {
+    ...mapState({
+      bannerList: (state) => {
+        return state.home.bannerList;
+      },
+    }),
+  },
+  watch: {
+    // 监听 bannerList数据的变化：因为这条数据发生过变化----由空数组变为数组里有四个元素
+    bannerList: {
+      immediate: true,
+      // eslint-disable-next-line no-unused-vars
+      handler(newvalue, oldvalue) {
+        this.$nextTick(() => {
+          // 当你执行这个回调的时候，保证服务器的数据回来了，v-for执行完毕了（轮播图的结构一定有了）
+          // eslint-disable-next-line no-unused-vars
+          let mySwiper = new Swiper(this.$refs.mySwiper, {
+            loop: true,
+            pagination: {
+              el: ".swiper-pagination",
+              clickable: true,
+            },
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            },
+          });
+        });
+      },
+    },
+  },
 };
-</script>
+</script> 
 
 <style lang="less" scoped>
 .list-container {

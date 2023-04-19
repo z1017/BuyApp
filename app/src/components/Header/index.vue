@@ -37,7 +37,7 @@
             type="text"
             id="autocomplete"
             class="input-error input-xxlarge"
-            v-model="keyWord"
+            v-model="keyword"
           />
           <button
             class="sui-btn btn-xlarge btn-danger"
@@ -57,7 +57,7 @@ export default {
   name: "headerIndex",
   data() {
     return {
-      keyWord: "",
+      keyword: "",
     };
   },
   methods: {
@@ -85,12 +85,18 @@ export default {
       if (this.$route.params) {
         let location = {
           name: "search",
-          params: { keyWord: this.keyWord || undefined },
+          params: { keyword: this.keyword || undefined },
         };
         location.query = this.$route.query;
         this.$router.push(location);
       }
     },
+  },
+  mounted() {
+    // 通过全局事件总线清除关键字
+    this.$bus.$on("clear", () => {
+      this.keyword = "";
+    });
   },
 };
 </script>

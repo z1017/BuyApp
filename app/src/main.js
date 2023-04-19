@@ -30,6 +30,10 @@ new Vue({
   // 组件身上都拥有 $router,$route属性
   router,
   render: h => h(App),
+  // 全局事件总线$bus设置
+  beforeCreate() {
+    Vue.prototype.$bus = this;
+  },
   //注册store,此时组件中都会拥有$store
   store
 }).$mount('#app')

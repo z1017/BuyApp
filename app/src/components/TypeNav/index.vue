@@ -20,9 +20,7 @@
                 <h3 @mouseenter="changeIndex(index)">
                   <a
                     :data-categoryName="c1.categoryName"
-                    :data-category1Id="c1.categoryId"
-                    >{{ c1.categoryName }}</a
-                  >
+                    :data-category1Id="c1.categoryId">{{ c1.categoryName }}</a>
                 </h3>
                 <!-- 二级、三级分类 -->
                 <div class="item-list clearfix">
@@ -129,8 +127,7 @@ export default {
       let element = event.target;
       // 获取到当前触发这个事件的节点 [h3、a、dt、d1]，需要带有 data-categoryname 的节点 [一定是 a标签]
       // 节点有一个属性 dataset 属性，可以获取节点的自定义属性与属性值
-      let { categoryname, category1id, category2id, category3id } =
-        element.dataset;
+      let { categoryname, category1id, category2id, category3id } = element.dataset;
 
       // 如果标签身上拥有 categoryname 一定是a标签
       if (categoryname) {

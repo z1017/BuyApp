@@ -119,6 +119,13 @@
             </ul>
           </div>
           <!-- 分页器 -->
+          <Pagination
+            :pageNo="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="total"
+            :continues="5"
+            @getPageNo="getPageNo"
+          />
         </div>
       </div>
     </div>
@@ -126,7 +133,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import SearchSelector from "./SearchSelector/SearchSelector";
 export default {
   name: "searchIndex",
@@ -150,9 +157,9 @@ export default {
         // 排序:初始状态应该是综合且降序
         order: "1:desc",
         // 分页器用的：代表当前是第几页
-        pageNo: "1",
+        pageNo: 1,
         // 每一页展示数据的个数
-        pageSize: 10,
+        pageSize:5,
         // 平台售卖属性的参数
         props: [],
         // 品牌
@@ -181,6 +188,10 @@ export default {
   computed: {
     // mapGetters里面的写法：传递的数组，因为getters计算的是没有划分模块【home,search】
     ...mapGetters(["goodsList"]),
+    // 获取search模块展示产品一共有多少数据
+    ...mapState({
+      total: (state) => state.search.searchList.total,
+    }),
     isOne() {
       return this.searchParams.order.indexOf("1") != -1;
     },
@@ -260,10 +271,10 @@ export default {
     // 排序操作
     changeOrder(flag) {
       // flag形参：他是一个标记，代表用户点击的是综合（1）还是价格（2）【用户点击时传进来的】
-      // let originOrder = this.searchParams.order
+      let originOrder = this.searchParams.order;
       // 这里获取到的是最开始的状态
-      let originFlag = this.searchParams.order.split(":")[0];
-      let originSort = this.searchParams.order.split(":")[1];
+      let originFlag = originOrder.split(":")[0];
+      let originSort = originOrder.split(":")[1];
       console.log("起始的originFlag:" + originFlag, "用户点击的flag:" + flag);
       let newOrder = "";
       // 点击的是综合
@@ -277,6 +288,13 @@ export default {
       // 再次发请求
       this.getData();
     },
+    // 自定义事件的回调函数，获取当前第几页
+    getPageNo(pageNo){
+      // 整理带给服务器参数
+      this.searchParams.pageNo = pageNo
+      // 再次发请求
+      this.getData()
+    }
   },
   // 数据监听：监听组件实力身上的属性的属性值变化
   watch: {

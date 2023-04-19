@@ -4,10 +4,12 @@ import App from './App.vue'
 // 三级联动组件---注册为全局组件,任何组件当中都可以使用
 import TypeNav from '@/components/TypeNav'
 import Carsousel from '@/components/Carsousel'
+import Pagination from '@/components/Pagination'
 
 // 第一个参数：全局组件的名字，第二个参数：哪一个组件
 Vue.component(TypeNav.name, TypeNav)
 Vue.component(Carsousel.name, Carsousel)
+Vue.component(Pagination.name, Pagination)
 
 // 引入MockServe.js-----mock数据
 import '@/mock/mockServe'

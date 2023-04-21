@@ -31,9 +31,7 @@
             <!-- 平台的售卖的属性值展示 -->
             <li
               class="with-x"
-              v-for="(attrValue, index) in searchParams.props"
-              :key="index"
-            >
+              v-for="(attrValue, index) in searchParams.props" :key="index">
               {{ attrValue.split(":")[1] }} <i @click="removerAttr(index)">x</i>
             </li>
           </ul>
@@ -81,9 +79,10 @@
               <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"
-                      ><img :src="good.defaultImg"
-                    /></a>
+                    <!-- 在路由跳转的时候切记别忘了带id（params）参数 -->
+                    <router-link :to="`/detail/${good.id}`">
+                      <img :src="good.defaultImg" />
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -159,7 +158,7 @@ export default {
         // 分页器用的：代表当前是第几页
         pageNo: 1,
         // 每一页展示数据的个数
-        pageSize:5,
+        pageSize: 5,
         // 平台售卖属性的参数
         props: [],
         // 品牌
@@ -289,12 +288,12 @@ export default {
       this.getData();
     },
     // 自定义事件的回调函数，获取当前第几页
-    getPageNo(pageNo){
+    getPageNo(pageNo) {
       // 整理带给服务器参数
-      this.searchParams.pageNo = pageNo
+      this.searchParams.pageNo = pageNo;
       // 再次发请求
-      this.getData()
-    }
+      this.getData();
+    },
   },
   // 数据监听：监听组件实力身上的属性的属性值变化
   watch: {

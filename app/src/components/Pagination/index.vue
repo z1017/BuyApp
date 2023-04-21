@@ -6,8 +6,9 @@
     <button v-if="startNumAndEndNum.start>2">···</button>
 
     <!-- 中间结构 -->
+    <!-- v-if会报错 因为 -->
     <button
-      v-for="(page, index) in startNumAndEndNum.end" :key="index" v-if="page >= startNumAndEndNum.start"
+      v-for="(page, index) in startNumAndEndNum.end" :key="index" v-show="page >= startNumAndEndNum.start"
      @click="$emit('getPageNo',page)" :class="{active:pageNo==page}"
       >
       {{ page }}</button>

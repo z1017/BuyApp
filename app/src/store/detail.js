@@ -1,6 +1,11 @@
 import { reqGoodsInfo, reqAddOrUpdateShopCart } from "@/api"
+// 封装游客身份模块uuid---->生成一个随机的字符串（不能二次更改）
+import { getUUID } from '@/utils/uuid_token'
+
 const state = {
-    goodInfo: {}
+    goodInfo: {},
+    // 游客临时身份
+    uuid_token: getUUID()
 }
 const mutations = {
     GETDOODINFO(state, goodInfo) {
@@ -26,7 +31,7 @@ const actions = {
         // 注意：async函数执行返回的结果一定是一个promise【要么成功要么失败】
         let result = await reqAddOrUpdateShopCart(skuId, skuNum);
         // 代表服务器加入购物车成功
-        if(result.code == 200) {
+        if (result.code == 200) {
             return 'ok'
         } else {
             // 代表加入购物车失败

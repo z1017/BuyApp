@@ -16,8 +16,8 @@ import '@/mock/mockServe'
 // 引入swiper样式 ; swiper6 引入swiper/swiper-bundle.min.css
 import 'swiper/css/swiper.css'
 
+// eslint-disable-next-line no-unused-vars
 import { reqGetSearchInfo } from './api'
-console.log(reqGetSearchInfo({}));
 
 // 引入路由
 import router from '@/router'

@@ -13,7 +13,6 @@ const actions = {
     // 获取search 模块数据
     async getSearchList({ commit }, params = {}) {
         let result = await reqGetSearchInfo(params);
-        console.log(result);
         if (result.code == 200) {
             commit('GETSEARCHLIST', result.data)
         }

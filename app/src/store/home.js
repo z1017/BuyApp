@@ -22,7 +22,6 @@ const mutations = {
 const actions = {
     // 通过API里面的接口函数调用，向服务器发请求，获取服务器的数据
     async categoryList({ commit }) {
-        console.log('获取服务器数据');
         let result = await reqCategoryList();
         if (result.code == 200) {
             commit("CATEGORTLIST", result.data);

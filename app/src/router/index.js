@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter from 'vue-router'
 import routes from './routes'
+// 引入store
+import store from '@/store'
 
 // 使用插件
 Vue.use(VueRouter)
@@ -32,15 +34,58 @@ VueRouter.prototype.replace = function (location, resolve, reject) {
 }
 
 // 配置路由
-export default new VueRouter({
+let router = new VueRouter({
     // 配置路由
     // KV一致省略V
     routes,
     // 滚动行为
     // eslint-disable-next-line no-unused-vars
-    scrollBehavior (to, from, savedPosition) {
+    scrollBehavior(to, from, savedPosition) {
         // 返回的y=0；代表的是滚动条在最上方
-        return {y:0}
+        return { y: 0 }
         // return 期望滚动到哪个的位置
-      }
+    },
 })
+
+// 全局前置守卫：在路由跳转之前进行判断
+router.beforeEach(async (to, from, next) => {
+    // to:可以获取到: 要跳转到哪个路由的信息
+    // from：可以获取到: 从哪个路由而来
+    // next：放行函数；next() 放行；next('/') 放行到指定路由      next(false)中断当前的导航
+    // next()
+    // 用户登录了，才会有token，未登录一定不会有token
+    let token = store.state.user.token;
+    // 用户信息
+    let name = store.state.user.userInfo.name
+    // 用户已经登陆了
+    if (token) {
+        // 用户已经登录了还想去login【不能去，使其停留在首页】
+        if (to.path == '/login') {
+            next('/home')
+        } else {
+            //登陆了，但是去的不是login 
+            // 如果用户名已有
+            if (name) {
+                next()
+            } else {
+                // 没有用户信息，派发action让仓库存储用户信息再跳转
+                try {
+                    // 获取用户信息成功
+                    await store.dispatch('getUserInfo')
+                    next()
+                } catch (error) {
+                    // token失效了，重新登录
+                    await store.dispatch('userLogout')
+                    next('/')
+                }
+            }
+        }
+    } else {
+        // 未登录暂时没有处理完毕，后期再处理
+        next()
+    }
+
+
+})
+
+export default router

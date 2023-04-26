@@ -81,11 +81,14 @@ router.beforeEach(async (to, from, next) => {
             }
         }
     } else {
-        // 未登录暂时没有处理完毕，后期再处理
-        next()
+        // 未登录
+        if (to.path === '/login' || to.path === '/home' || to.path === '/register')
+            next()
+        else {
+            alert('请先登录')
+            next('/login')
+        }
     }
-
-
 })
 
 export default router

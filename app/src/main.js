@@ -5,27 +5,32 @@ import App from './App.vue'
 import TypeNav from '@/components/TypeNav'
 import Carsousel from '@/components/Carsousel'
 import Pagination from '@/components/Pagination'
+import { Button, MessageBox} from 'element-ui'
 
-// 第一个参数：全局组件的名字，第二个参数：哪一个组件
+// 全局组件： 第一个参数：全局组件的名字，第二个参数：哪一个组件
 Vue.component(TypeNav.name, TypeNav)
 Vue.component(Carsousel.name, Carsousel)
 Vue.component(Pagination.name, Pagination)
+
+// 注册全局组件
+Vue.component(Button.name, Button)
+// ElementUI注册组件的时候，还有一种写法：挂在原型上（先引入
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
 
 // 引入MockServe.js-----mock数据
 import '@/mock/mockServe'
 // 引入swiper样式 ; swiper6 引入swiper/swiper-bundle.min.css
 import 'swiper/css/swiper.css'
 
-// eslint-disable-next-line no-unused-vars
-import { reqGetSearchInfo } from './api'
-
 // 引入路由
 import router from '@/router'
 // 引入仓库
 import store from './store'
 
-
-Vue.config.productionTip = false
+// 统一接口api文件夹里面全部的请求函数
+// 统一引入
+import * as API from './api'
 
 new Vue({
   // 注册路由：底下的写法是KV一致省略V （router小写
@@ -35,7 +40,9 @@ new Vue({
   // 全局事件总线$bus设置
   beforeCreate() {
     Vue.prototype.$bus = this;
+    Vue.prototype.$API = API;
   },
-  //注册store,此时组件中都会拥有$store
+  //注册store,此时每一个组件都会拥有$store这个属性
   store
+
 }).$mount('#app')

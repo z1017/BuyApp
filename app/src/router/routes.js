@@ -7,21 +7,33 @@ import Detail from '@/views/Detail'
 import AddCartSuccess from '@/views/AddCartSuccess'
 import ShopCart from '@/views/ShopCart'
 import Trade from '@/views/Trade'
+import Pay from '@/views/Pay'
+import PaySuccess from '@/views/PaySuccess'
 
 // 路由配置信息
 export default [
-    {  
+    {
+        path: '/paysuccess',
+        component: PaySuccess,
+        meta: { show: true }
+    },
+    {
+        path: '/pay',
+        component: Pay,
+        meta: { show: true }
+    },
+    {
         path: '/trade',
         component: Trade,
         meta: { show: true }
     },
-    {  
+    {
         path: '/shopcart',
         component: ShopCart,
         meta: { show: true }
     },
     {
-        name:'addCartSuccess',
+        name: 'addCartSuccess',
         path: '/addCartSuccess',
         component: AddCartSuccess,
         meta: { show: true }

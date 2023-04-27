@@ -2,21 +2,19 @@ import Vue from 'vue'
 import App from './App.vue'
 
 
-
-
-
 // 三级联动组件---注册为全局组件,任何组件当中都可以使用
 import TypeNav from '@/components/TypeNav'
 import Carsousel from '@/components/Carsousel'
 import Pagination from '@/components/Pagination'
 import {
   Button, MessageBox, Form, FormItem, Input,
-  InputNumber,
+  InputNumber,Checkbox,
 } from 'element-ui'
 Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(Input);
 Vue.use(InputNumber);
+Vue.use(Checkbox);
 
 // 全局组件： 第一个参数：全局组件的名字，第二个参数：哪一个组件
 Vue.component(TypeNav.name, TypeNav)

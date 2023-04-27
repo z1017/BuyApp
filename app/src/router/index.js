@@ -81,14 +81,20 @@ router.beforeEach(async (to, from, next) => {
             }
         }
     } else {
-        // 未登录
-        if (to.path === '/login' || to.path === '/home' || to.path === '/register')
+        // 未登录：
+        /*  if (to.path === '/login' || to.path === '/home' || to.path === '/register')
+             next() */
+        let toPath = to.path;
+        if (toPath.indexOf('/trade') != -1 || toPath.indexOf('/pay') != -1 || toPath.indexOf('/center') != -1) {
+            // 把未登录的时候想去而没去成的信息，存储于地址栏中【】
+            next('/login?redirect=' + toPath);
+        } else {
+            /* alert('请先登录')
+            next('/login') */
+            // 去的不是以上路由，全部放行
             next()
-        else {
-            alert('请先登录')
-            next('/login')
         }
     }
 })
 
-export default router
+export default router;

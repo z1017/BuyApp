@@ -1,11 +1,22 @@
 import Vue from 'vue'
 import App from './App.vue'
 
+
+
+
+
 // 三级联动组件---注册为全局组件,任何组件当中都可以使用
 import TypeNav from '@/components/TypeNav'
 import Carsousel from '@/components/Carsousel'
 import Pagination from '@/components/Pagination'
-import { Button, MessageBox} from 'element-ui'
+import {
+  Button, MessageBox, Form, FormItem, Input,
+  InputNumber,
+} from 'element-ui'
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
+Vue.use(InputNumber);
 
 // 全局组件： 第一个参数：全局组件的名字，第二个参数：哪一个组件
 Vue.component(TypeNav.name, TypeNav)
@@ -22,6 +33,18 @@ Vue.prototype.$alert = MessageBox.alert;
 import '@/mock/mockServe'
 // 引入swiper样式 ; swiper6 引入swiper/swiper-bundle.min.css
 import 'swiper/css/swiper.css'
+
+// 引入图片
+import kangna from '@/assets/nn.jpg'
+
+
+// 引入VueLazyload插件
+import VueLazyload from 'vue-lazyload'
+// 注册插件
+Vue.use(VueLazyload, {
+  // 懒加载默认的图片
+  loading: kangna,
+})
 
 // 引入路由
 import router from '@/router'

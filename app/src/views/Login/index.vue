@@ -89,8 +89,11 @@ export default {
         // 登录成功
         const { phone, password } = this;
         (phone&&password) && (await this.$store.dispatch("userLogin", { phone, password }));
-        // 跳转到 home首页
-        (phone&&password)? this.$router.push('/home'): alert('请输入用户名和密码')       
+        /* // 跳转到 home首页
+        (phone&&password)? this.$router.push('/home'): alert('请输入用户名和密码') */
+        // 登录到路由组件：看路由当中是否包含query参数， 有：跳到query指定路由；没有：跳到home
+        let toPath = this.$route.query.redirect || '/home'
+        this.$router.push(toPath)
       } catch (error) {
         alert(error.message);
       }
